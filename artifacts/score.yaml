@@ -1,6 +1,5 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: score-config
-data:
-  score: '100'
+score:
+  modernization-readiness: 8/10
+  complexity: medium
+  estimated-effort: 3 weeks
+  risk: low

@@ -1,26 +1,18 @@
-# Use an official maven runtime as a parent image
+# Dockerfile for Java-based web application
+
 FROM maven:3.6.3-jdk-8
 
-# Set the working directory in the container to /app
+# Copy the project files to the Docker image
+COPY . /app
+
+# Set the working directory
 WORKDIR /app
 
-# Add the current directory contents into the container at /app
-ADD . /app
+# Build the project
+RUN mvn clean install
 
-# Package the application
-RUN mvn package
-
-# Use an official Tomcat runtime as a base image
-FROM tomcat:9.0.37-jdk8-openjdk
-
-# Set the working directory in the container to /usr/local/tomcat/webapps
-WORKDIR /usr/local/tomcat/webapps
-
-# Copy the WAR file from the maven container
-COPY --from=0 /app/target/*.war ./
-
-# Make port 8080 available to the world outside this container
+# Expose the application port
 EXPOSE 8080
 
-# Run the app when the container launches
-CMD ["catalina.sh", "run"]
+# Run the application
+CMD ["java", "-jar", "target/legacy-app-1.0-SNAPSHOT.jar"]
