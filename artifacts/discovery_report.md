@@ -4,38 +4,38 @@
 
 The project is a Java-based web application structured as a Maven project. The main components of the project are:
 
-- `pom.xml`: The project object model (POM) file for Maven. It contains the project configuration, including dependencies and build settings.
-- `src/main/java`: This directory contains the Java source code for the application.
-- `src/main/resources`: This directory contains resources required by the application, such as configuration files.
-- `src/main/webapp`: This directory contains the web application resources, including JSP files and the web.xml configuration file.
+- `pom.xml`: The Maven Project Object Model file, which contains project and configuration related information.
+- `src/main/java`: Contains the Java source files for the application.
+- `src/main/resources`: Contains resources like configuration files.
+- `src/main/webapp`: Contains web related files like JSPs, HTMLs, and WEB-INF.
 
 ## Dependencies
 
-The application has the following dependencies, as specified in the `pom.xml`:
+The project has the following dependencies as specified in the `pom.xml`:
 
-- `javax.servlet:javax.servlet-api:3.1.0`: The Servlet API, used for handling HTTP requests and responses.
-- `mysql:mysql-connector-java:5.1.49`: The MySQL Connector/J, a JDBC Type 4 driver for communicating with MySQL databases.
+- `javax.servlet:javax.servlet-api:3.1.0`: The Java Servlet API.
+- `mysql:mysql-connector-java:5.1.49`: MySQL JDBC driver for connecting to MySQL databases.
 
-## Frameworks and APIs
+## Frameworks
 
-The application uses the Servlet API for handling HTTP requests and responses. It also uses JDBC for communicating with a MySQL database.
+The project uses the Java Servlet API for handling HTTP requests.
+
+## APIs
+
+The project defines a single Servlet, `LegacyServlet`, which is mapped to the `/legacy` URL pattern.
 
 ## Integrations
 
-The application integrates with a MySQL database. The database connection details are specified in the `legacy.properties` file in the `src/main/resources` directory.
+The application integrates with a MySQL database. The connection details are read from a properties file (`legacy.properties`) and used to establish a connection.
 
 ## Data Flows
 
-The application has a simple data flow:
-
-1. An HTTP request is received by the `LegacyServlet`.
-2. The `LegacyServlet` attempts to establish a connection to the MySQL database using the `Database` class.
-3. The result of the database connection attempt is written to the HTTP response.
+When a GET request is made to the `/legacy` endpoint, the `LegacyServlet`'s `doGet` method is invoked. This method attempts to establish a connection to the MySQL database and writes a response indicating whether the connection was successful.
 
 ## External Systems
 
-The application interacts with a MySQL database.
+The application connects to a MySQL database. The connection details (URL, username, password) are specified in the `legacy.properties` file.
 
 ## Architecture Patterns
 
-The application follows a traditional Java web application architecture, with servlets handling HTTP requests and responses. The application is packaged as a WAR (Web Application Archive) file, as specified in the `pom.xml`.
+The application follows a traditional Java web application architecture with Servlets being used to handle HTTP requests. The application is packaged as a WAR (Web Application Archive) file, as specified in the `pom.xml`.

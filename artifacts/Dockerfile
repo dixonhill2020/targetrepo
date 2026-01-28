@@ -1,27 +1,26 @@
-# Dockerfile for Java Web Application
-
+# Use an official maven runtime as a parent image
 FROM maven:3.6.3-jdk-8
 
-# Copy the project files to the Docker image
-COPY . /usr/src/app
+# Set the working directory in the container to /app
+WORKDIR /app
 
-# Set the working directory
-WORKDIR /usr/src/app
+# Add the current directory contents into the container at /app
+ADD . /app
 
-# Build the project
-RUN mvn clean install
+# Package the application
+RUN mvn package
 
-# Use Tomcat to run the application
-FROM tomcat:8.5.61-jdk8-openjdk
+# Use an official Tomcat runtime as a base image
+FROM tomcat:9.0.37-jdk8-openjdk
 
-# Remove the default Tomcat applications
-RUN rm -rf /usr/local/tomcat/webapps/*
+# Set the working directory in the container to /usr/local/tomcat/webapps
+WORKDIR /usr/local/tomcat/webapps
 
-# Copy the WAR file to the Tomcat webapps directory
-COPY --from=0 /usr/src/app/target/*.war /usr/local/tomcat/webapps/ROOT.war
+# Copy the WAR file from the maven container
+COPY --from=0 /app/target/*.war ./
 
-# Expose the Tomcat port
+# Make port 8080 available to the world outside this container
 EXPOSE 8080
 
-# Start Tomcat
+# Run the app when the container launches
 CMD ["catalina.sh", "run"]

@@ -1,16 +1,16 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: java-web-app-ingress
+  name: legacy-app-ingress
 spec:
   rules:
-  - host: java-web-app.example.com
+  - host: legacy-app.example.com
     http:
       paths:
       - pathType: Prefix
         path: /
         backend:
           service:
-            name: java-web-app-service
+            name: legacy-app-service
             port:
               number: 80
